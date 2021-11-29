@@ -1,0 +1,10 @@
+type: object
+description: Quantity of inventory items, materials or any other kind of resources expressed in quantity qualified by appropriate unit of measure
+properties:
+  quantity:
+    type: number
+    description: Quantity of UOMs
+  UOM:
+    type: object
+    description: The unit of measure information that quantity refers to
+    $ref: "./UnitOfMeasure.yaml"

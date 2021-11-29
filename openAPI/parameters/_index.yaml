@@ -1,0 +1,6 @@
+OrganizationCode:
+  $ref: "./OrganizationCode.yaml"
+ItemCode:
+  $ref: "./ItemCode.yaml"
+LotNumber:
+  $ref: "./LotNumber.yaml"

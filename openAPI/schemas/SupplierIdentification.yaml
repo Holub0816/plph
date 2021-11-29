@@ -1,0 +1,12 @@
+allOf:
+  - $ref: "./Identification.yaml"
+  - type: object
+    description: Structure with proper identificators of the supplier
+    properties:
+      businessId:
+        type: object
+        description: Structure for Supplier business Id defined by supplier code
+        properties:
+          supplierCode:
+            type: string
+            description: Code of the supplier organization

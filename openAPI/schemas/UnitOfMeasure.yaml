@@ -1,0 +1,9 @@
+type: object
+description: Unit of measure definition
+properties:
+  UOMCode:
+    type: string
+    description: Code (abbreviation) of unit of measure
+  UOMName:
+    type: string
+    description: Name (meaning) of unit of measure

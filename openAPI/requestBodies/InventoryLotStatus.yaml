@@ -1,0 +1,5 @@
+description: Request with new iventory lot status information. Value of the /status/meaning element is ignored by service.
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/InventoryLotStatus.yaml"

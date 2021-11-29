@@ -1,0 +1,8 @@
+name: item-code
+in: path
+description: Code of inventory item
+required: true
+schema:
+  type: string
+  minLength: 13
+  maxLength: 13

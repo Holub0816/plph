@@ -1,0 +1,15 @@
+allOf:
+  - $ref: "./Identification.yaml"
+  - type: object
+    description: Structure with proper identificators of the item
+    properties:
+      businessId:
+        type: object
+        description: Structure for inventory item business Id consisting of both organization code and item code.
+        properties:
+          organizationCode:
+            type: string
+            description: Code of the inventory organization
+          itemCode:
+            type: string
+            description: Inventory item code

@@ -1,0 +1,52 @@
+type: object
+properties:
+  inventoryItem:
+    type: object
+    description: Inventory item
+    properties:
+      identification:
+        type: object
+        $ref: "./Identification.yaml"
+      stockEnabledFlag:
+        type: boolean
+        description: Flag indicating if item is enabled for stock. Values true/false.
+          [???]
+      shelfLifeDays:
+        type: integer
+        description: Number of days that each lot is active.
+      qualityRetestInterval:
+        type: integer
+        description: Number of days after which the quality inspection test must
+          be retaken.
+      buyerName:
+        type: string
+        description: Name of a person responsible for buying this item
+      itemStatus:
+        type: object
+        description: Status of the item
+        $ref: "./Status.yaml"
+      issueUOM:
+        type: object
+        description: The unit of measure in which the item is issued from the inventory.
+        $ref: "./UnitOfMeasure.yaml"
+      primaryUOM:
+        type: object
+        description: The primary unit of measure of the item.
+        $ref: "./UnitOfMeasure.yaml"
+      itemCategories:
+        type: array
+        description: All categories assigned to a given item
+        items:
+          $ref: "./NameValue.yaml"
+      itemTranslations:
+        type: array
+        items:
+          $ref: "./ItemTranslation.yaml"
+      organizationReference:
+        type: object
+        description: A reference to invnetory organization applicable for this inventory item
+        properties:
+          identification:
+            type: object
+            description: Identification of the organization
+            $ref: "./OrganizationIdentification.yaml"

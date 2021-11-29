@@ -1,0 +1,10 @@
+type: object
+description: Structure to keep all of proper (unique) identifiers af a given business object. This should be customized based on real needs of a given object.
+properties:
+  uniqId:
+    type: string
+    description: Globaly unique identifier of the object.  
+  businessId:
+    type: object
+    description: An object to place elements that constitutes business identificator.<br> <b>If needed must be implemented via <BusinessObject>BusinessId reusable schema which is to extend Identification schema inside the object definition.</b><br>
+      All of the properties inside businessId <b>MUST</b> build a proper unique Id

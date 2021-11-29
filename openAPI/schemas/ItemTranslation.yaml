@@ -1,0 +1,15 @@
+type: object
+properties:
+  language:
+    maxLength: 2
+    type: string
+    description: Language of the translation compliant with ISO 639-1 codes
+      (2 characters abbreviations)
+  itemDescription:
+    type: string
+    description: Translated name of the item.
+  sourceLanguage:
+    maxLength: 2
+    type: string
+    description: The primary language of the item compliant with ISO 639-1 codes
+      (2 characters abbreviations)

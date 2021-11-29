@@ -1,0 +1,9 @@
+type: object
+description: Strcuture for storing name/value primary
+properties:
+  name:
+    type: string
+    description: Name of the position
+  value:
+    type: string
+    description: Value of the position of the given name

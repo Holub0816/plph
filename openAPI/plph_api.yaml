@@ -1,0 +1,27 @@
+  openapi: 3.0.1
+  info:
+    title: REST API for Inventory Domain
+    description: Zakłady Faramceutyczne Polpharma S.A - REST API
+    version: 2020.11.17
+    x-summary: TBD.
+  tags:
+    - name: Inventory items
+      description: API concerning inventory items
+    - name: Inventory item lots
+      description: API concerning inventory item lots
+  paths:
+    /organizations/{organization-code}/items/{item-code}:
+      $ref: "./resources/InventoryItems.yaml"
+    /organizations/{organization-code}/items/{item-code}/inventory-lots/{lot-number}:
+      $ref: "./resources/GetInventoryItemLots.yaml"
+    /items/{item-code}/inventory-lots/{lot-number}/lot-status:
+      $ref: "./resources/PutInventoryItemLots.yaml"
+  components:
+    schemas:
+      $ref: "./schemas/_index.yaml"
+    parameters:
+      $ref: "./parameters/_index.yaml"
+    responses:
+      $ref: "./responses/_index.yaml"
+    requestBodies:
+      $ref: "./requestBodies/_index.yaml"

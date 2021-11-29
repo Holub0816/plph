@@ -1,0 +1,4 @@
+GetInventoryLot:
+  $ref: "./GetInventoryLot.yaml"
+GetItem:
+  $ref: "./GetItem.yaml"

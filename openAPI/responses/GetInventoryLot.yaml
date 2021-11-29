@@ -1,0 +1,5 @@
+description: Response for correct request for getting inventory item lot basic information
+content:
+  application/json:
+    schema:
+        $ref: "../schemas/InventoryLotBO.yaml"

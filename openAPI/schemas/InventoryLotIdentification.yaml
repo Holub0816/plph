@@ -1,0 +1,18 @@
+allOf:
+  - $ref: "./Identification.yaml"
+  - type: object
+    description: Structure with proper identificators of the item lot
+    properties:
+      businessId:
+        type: object
+        description: "Inventory item lot is identified by 3 separate values: Organization Code, Lot Number and Item Number"
+        properties:
+          organizationCode:
+            type: string
+            description: Code of the inventory organization
+          itemCode:
+            type: string
+            description: Inventory item number
+          lotNumber:
+            type: string
+            description: Inventory item lot code

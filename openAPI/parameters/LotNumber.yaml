@@ -1,0 +1,6 @@
+name: lot-number
+in: path
+description: Inventory item lot number - not to be mistaken with supplier lot number
+required: true
+schema:
+  type: string

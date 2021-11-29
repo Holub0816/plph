@@ -1,0 +1,20 @@
+put:
+  tags:
+    - 'Inventory item lots'
+  summary: Registers new status information for a given inventory lot based on lot number and item code across all inventory organizations
+  parameters:
+    - $ref: "../parameters/ItemCode.yaml"
+    - $ref: "../parameters/LotNumber.yaml"
+  requestBody:
+    required: true
+    description: aksksk
+    $ref: "../requestBodies/InventoryLotStatus.yaml"
+  responses:
+    '201':
+      description: Inventory lot status has been updated
+    '400':
+      description: Invalid inventory item code - must be 13 characters
+    '404':
+      description: Requested resource was not found
+    '500':
+      description: Internal server error or backend system responded with error

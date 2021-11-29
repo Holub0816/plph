@@ -1,0 +1,29 @@
+Identification:
+  $ref: "./Identification.yaml"
+InventoryItemBO:
+  $ref: "./InventoryItemBO.yaml"
+InventoryLotBO:
+  $ref: "./InventoryLotBO.yaml"
+InventoryItemIdentification:
+  $ref: "./InventoryItemIdentification.yaml"
+OrganizationIdentification:
+  $ref: "./OrganizationIdentification.yaml"
+SupplierIdentification:
+  $ref: "./SupplierIdentification.yaml"
+InventoryLotIdentification:
+  $ref: "./InventoryLotIdentification.yaml"
+ItemTranslation:
+  $ref: "./ItemTranslation.yaml"
+NameValue:
+  $ref: "./NameValue.yaml"
+UnitOfMeasure:
+  $ref: "./UnitOfMeasure.yaml"
+QualifiedQuantity:
+  $ref: "./QualifiedQuantity.yaml"
+Status:
+  $ref: "./Status.yaml"
+InventoryLotStatus:
+  $ref: "./InventoryLotStatus.yaml"
+
+
+

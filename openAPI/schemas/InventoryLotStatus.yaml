@@ -1,0 +1,21 @@
+type: object
+description: Inventory item lot status
+allOf:
+  - type: object
+    properties:
+      status:
+        type: object
+        description: Status value
+        $ref: "./Status.yaml"
+  - type: string
+    properties:
+      expiryDate:
+        type: string
+        format: date
+        description: Day when the given status expires
+  - type: string
+    properties:
+      retestDate:
+        type: string
+        format: date
+        description: Date when a lot test must be retaken in order to keep the status valid

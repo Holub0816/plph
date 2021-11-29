@@ -1,0 +1,77 @@
+type: object
+properties:
+  inventoryLot:
+    type: object
+    description: Inventory item lot business object
+    properties:
+      identification:
+        type: object
+        $ref: "./InventoryLotIdentification.yaml"
+      supplierLotNumber:
+        type: string
+        description: Lot number of item given by supplier
+      lotStatus:
+        type: object
+        description: Status information regading given inventory lot
+        $ref: "./InventoryLotStatus.yaml"
+      productionDate:
+        type: string
+        format: date
+        description: Date on which the items from lot were produced. For external delivery this is to be treated as a receive date
+      containerQuantity:
+        type: integer
+        description: Number of containers of a given lot
+      subinventoryQuantities:
+        type: array
+        description: Information about all subinventories, quantities of items expressed in quantity qualified by appropriate unit of measure
+        items:
+          allOf:
+            - type: string
+              properties:
+                subinventoryCode:
+                  type: string
+                  description: Code of the subinventory of lot items
+            - type: object
+              properties:
+                onHandQuantity:
+                  type: object
+                  $ref: "./QualifiedQuantity.yaml"
+      facilityQuantities:
+        type: array
+        description: Information about all facilities, quantities of items expressed in quantity qualified by appropriate unit of measure
+        items:
+          allOf:
+            - type: string
+              properties:
+                facilityCode:
+                  type: string
+                  description: Code of the subinventory of lot items
+            - type: object
+              properties:
+                onHandQuantity:
+                  type: object
+                  $ref: "./QualifiedQuantity.yaml"
+      organizationReference:
+        type: object
+        description: A reference to invnetory organization applicable for this inventory item
+        properties:
+          identification:
+            type: object
+            description: Identification of the organization
+            $ref: "./OrganizationIdentification.yaml"
+      inventoryItemReference:
+        type: object
+        description: A reference to supplier organization applicable for this inventory item
+        properties:
+          identification:
+            type: object
+            description: Identification of the item
+            $ref: "./InventoryItemIdentification.yaml"
+      supplierReference:
+        type: object
+        description: A reference to supplier organization applicable for this inventory item
+        properties:
+          identification:
+            type: object
+            description: Identification of the supplier
+            $ref: "./SupplierIdentification.yaml"

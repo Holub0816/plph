@@ -1,0 +1,16 @@
+get:
+  tags:
+    - 'Inventory items'
+  summary: Gets basic information about an item by Organization Code and Item Number
+  parameters:
+    - $ref: "../parameters/OrganizationCode.yaml"
+    - $ref: "../parameters/ItemCode.yaml"
+  responses:
+    '200':
+      $ref: "../responses/GetItem.yaml"
+    '400':
+      description: Invalid inventory item code - must be 13 characters
+    '404':
+      description: Requested resource was not found
+    '500':
+      description: Internal server error or backend system responded with error

@@ -1,0 +1,9 @@
+type: object
+description: Generic status of an object
+properties:
+  code:
+    type: string
+    description: Status code
+  meaning:
+    type: string
+    description: Meaning of a given status code

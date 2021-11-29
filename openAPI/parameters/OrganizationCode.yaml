@@ -1,0 +1,6 @@
+name: organization-code
+in: path
+description: Inventory organization code used in Polpharma. Value <b>ZPF</b> refers to master organization.
+required: true
+schema:
+  type: string

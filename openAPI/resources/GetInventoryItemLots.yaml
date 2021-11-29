@@ -1,0 +1,17 @@
+get:
+  tags:
+    - 'Inventory item lots'
+  summary: Gets basic information about an inventory item lot by Organization Code, Lot Number and Item Number
+  parameters:
+    - $ref: "../parameters/OrganizationCode.yaml"
+    - $ref: "../parameters/ItemCode.yaml"
+    - $ref: "../parameters/LotNumber.yaml"
+  responses:
+    '200':
+       $ref: "../responses/GetInventoryLot.yaml"
+    '400':
+       description: Invalid inventory item code - must be 13 characters
+    '404':
+       description: Requested resource was not found
+    '500':
+       description: Internal server error or backend system responded with error

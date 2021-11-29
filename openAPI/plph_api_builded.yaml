@@ -1,0 +1,391 @@
+openapi: 3.0.1
+info:
+  title: REST API for Inventory Domain
+  description: Zakłady Faramceutyczne Polpharma S.A - REST API
+  version: 2020.11.17
+  x-summary: TBD.
+tags:
+  - name: Inventory items
+    description: API concerning inventory items
+  - name: Inventory item lots
+    description: API concerning inventory item lots
+paths:
+  '/organizations/{organization-code}/items/{item-code}':
+    get:
+      tags:
+        - Inventory items
+      summary: Gets basic information about an item by Organization Code and Item Number
+      parameters:
+        - $ref: '#/components/parameters/OrganizationCode'
+        - $ref: '#/components/parameters/ItemCode'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetItem'
+        '400':
+          description: Invalid inventory item code - must be 13 characters
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: Internal server error or backend system responded with error
+  '/organizations/{organization-code}/items/{item-code}/inventory-lots/{lot-number}':
+    get:
+      tags:
+        - Inventory item lots
+      summary: 'Gets basic information about an inventory item lot by Organization Code, Lot Number and Item Number'
+      parameters:
+        - $ref: '#/components/parameters/OrganizationCode'
+        - $ref: '#/components/parameters/ItemCode'
+        - $ref: '#/components/parameters/LotNumber'
+      responses:
+        '200':
+          $ref: '#/components/responses/GetInventoryLot'
+        '400':
+          description: Invalid inventory item code - must be 13 characters
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: Internal server error or backend system responded with error
+  '/items/{item-code}/inventory-lots/{lot-number}/lot-status':
+    put:
+      tags:
+        - Inventory item lots
+      summary: Registers new status information for a given inventory lot based on lot number and item code across all inventory organizations
+      parameters:
+        - $ref: '#/components/parameters/ItemCode'
+        - $ref: '#/components/parameters/LotNumber'
+      requestBody:
+        required: true
+        description: aksksk
+        $ref: '#/components/requestBodies/InventoryLotStatus'
+      responses:
+        '201':
+          description: Inventory lot status has been updated
+        '400':
+          description: Invalid inventory item code - must be 13 characters
+        '404':
+          description: Requested resource was not found
+        '500':
+          description: Internal server error or backend system responded with error
+components:
+  schemas:
+    Identification:
+      type: object
+      description: Structure to keep all of proper (unique) identifiers af a given business object. This should be customized based on real needs of a given object.
+      properties:
+        uniqId:
+          type: string
+          description: Globaly unique identifier of the object.
+        businessId:
+          type: object
+          description: An object to place elements that constitutes business identificator.<br> <b>If needed must be implemented via <BusinessObject>BusinessId reusable schema which is to extend Identification schema inside the object definition.</b><br> All of the properties inside businessId <b>MUST</b> build a proper unique Id
+    InventoryItemBO:
+      type: object
+      properties:
+        inventoryItem:
+          type: object
+          description: Inventory item
+          properties:
+            identification:
+              type: object
+              $ref: '#/components/schemas/Identification'
+            stockEnabledFlag:
+              type: boolean
+              description: 'Flag indicating if item is enabled for stock. Values true/false. [???]'
+            shelfLifeDays:
+              type: integer
+              description: Number of days that each lot is active.
+            qualityRetestInterval:
+              type: integer
+              description: Number of days after which the quality inspection test must be retaken.
+            buyerName:
+              type: string
+              description: Name of a person responsible for buying this item
+            itemStatus:
+              type: object
+              description: Status of the item
+              $ref: '#/components/schemas/Status'
+            issueUOM:
+              type: object
+              description: The unit of measure in which the item is issued from the inventory.
+              $ref: '#/components/schemas/UnitOfMeasure'
+            primaryUOM:
+              type: object
+              description: The primary unit of measure of the item.
+              $ref: '#/components/schemas/UnitOfMeasure'
+            itemCategories:
+              type: array
+              description: All categories assigned to a given item
+              items:
+                $ref: '#/components/schemas/NameValue'
+            itemTranslations:
+              type: array
+              items:
+                $ref: '#/components/schemas/ItemTranslation'
+            organizationReference:
+              type: object
+              description: A reference to invnetory organization applicable for this inventory item
+              properties:
+                identification:
+                  type: object
+                  description: Identification of the organization
+                  $ref: '#/components/schemas/OrganizationIdentification'
+    InventoryLotBO:
+      type: object
+      properties:
+        inventoryLot:
+          type: object
+          description: Inventory item lot business object
+          properties:
+            identification:
+              type: object
+              $ref: '#/components/schemas/InventoryLotIdentification'
+            supplierLotNumber:
+              type: string
+              description: Lot number of item given by supplier
+            lotStatus:
+              type: object
+              description: Status information regading given inventory lot
+              $ref: '#/components/schemas/InventoryLotStatus'
+            productionDate:
+              type: string
+              format: date
+              description: Date on which the items from lot were produced. For external delivery this is to be treated as a receive date
+            containerQuantity:
+              type: integer
+              description: Number of containers of a given lot
+            subinventoryQuantities:
+              type: array
+              description: 'Information about all subinventories, quantities of items expressed in quantity qualified by appropriate unit of measure'
+              items:
+                allOf:
+                  - type: string
+                    properties:
+                      subinventoryCode:
+                        type: string
+                        description: Code of the subinventory of lot items
+                  - type: object
+                    properties:
+                      onHandQuantity:
+                        type: object
+                        $ref: '#/components/schemas/QualifiedQuantity'
+            facilityQuantities:
+              type: array
+              description: 'Information about all facilities, quantities of items expressed in quantity qualified by appropriate unit of measure'
+              items:
+                allOf:
+                  - type: string
+                    properties:
+                      facilityCode:
+                        type: string
+                        description: Code of the subinventory of lot items
+                  - type: object
+                    properties:
+                      onHandQuantity:
+                        type: object
+                        $ref: '#/components/schemas/QualifiedQuantity'
+            organizationReference:
+              type: object
+              description: A reference to invnetory organization applicable for this inventory item
+              properties:
+                identification:
+                  type: object
+                  description: Identification of the organization
+                  $ref: '#/components/schemas/OrganizationIdentification'
+            inventoryItemReference:
+              type: object
+              description: A reference to supplier organization applicable for this inventory item
+              properties:
+                identification:
+                  type: object
+                  description: Identification of the item
+                  $ref: '#/components/schemas/InventoryItemIdentification'
+            supplierReference:
+              type: object
+              description: A reference to supplier organization applicable for this inventory item
+              properties:
+                identification:
+                  type: object
+                  description: Identification of the supplier
+                  $ref: '#/components/schemas/SupplierIdentification'
+    InventoryItemIdentification:
+      allOf:
+        - $ref: '#/components/schemas/Identification'
+        - type: object
+          description: Structure with proper identificators of the item
+          properties:
+            businessId:
+              type: object
+              description: Structure for inventory item business Id consisting of both organization code and item code.
+              properties:
+                organizationCode:
+                  type: string
+                  description: Code of the inventory organization
+                itemCode:
+                  type: string
+                  description: Inventory item code
+    OrganizationIdentification:
+      allOf:
+        - $ref: '#/components/schemas/Identification'
+        - type: object
+          description: Structure with proper identificators of the organization
+          properties:
+            businessId:
+              type: object
+              description: Structure for Organization business Id defined by organization code
+              properties:
+                organizationCode:
+                  type: string
+                  description: Code of the inventory organization
+    SupplierIdentification:
+      allOf:
+        - $ref: '#/components/schemas/Identification'
+        - type: object
+          description: Structure with proper identificators of the supplier
+          properties:
+            businessId:
+              type: object
+              description: Structure for Supplier business Id defined by supplier code
+              properties:
+                supplierCode:
+                  type: string
+                  description: Code of the supplier organization
+    InventoryLotIdentification:
+      allOf:
+        - $ref: '#/components/schemas/Identification'
+        - type: object
+          description: Structure with proper identificators of the item lot
+          properties:
+            businessId:
+              type: object
+              description: 'Inventory item lot is identified by 3 separate values: Organization Code, Lot Number and Item Number'
+              properties:
+                organizationCode:
+                  type: string
+                  description: Code of the inventory organization
+                itemCode:
+                  type: string
+                  description: Inventory item number
+                lotNumber:
+                  type: string
+                  description: Inventory item lot code
+    ItemTranslation:
+      type: object
+      properties:
+        language:
+          maxLength: 2
+          type: string
+          description: Language of the translation compliant with ISO 639-1 codes (2 characters abbreviations)
+        itemDescription:
+          type: string
+          description: Translated name of the item.
+        sourceLanguage:
+          maxLength: 2
+          type: string
+          description: The primary language of the item compliant with ISO 639-1 codes (2 characters abbreviations)
+    NameValue:
+      type: object
+      description: Strcuture for storing name/value primary
+      properties:
+        name:
+          type: string
+          description: Name of the position
+        value:
+          type: string
+          description: Value of the position of the given name
+    UnitOfMeasure:
+      type: object
+      description: Unit of measure definition
+      properties:
+        UOMCode:
+          type: string
+          description: Code (abbreviation) of unit of measure
+        UOMName:
+          type: string
+          description: Name (meaning) of unit of measure
+    QualifiedQuantity:
+      type: object
+      description: 'Quantity of inventory items, materials or any other kind of resources expressed in quantity qualified by appropriate unit of measure'
+      properties:
+        quantity:
+          type: number
+          description: Quantity of UOMs
+        UOM:
+          type: object
+          description: The unit of measure information that quantity refers to
+          $ref: '#/components/schemas/UnitOfMeasure'
+    Status:
+      type: object
+      description: Generic status of an object
+      properties:
+        code:
+          type: string
+          description: Status code
+        meaning:
+          type: string
+          description: Meaning of a given status code
+    InventoryLotStatus:
+      type: object
+      description: Inventory item lot status
+      allOf:
+        - type: object
+          properties:
+            status:
+              type: object
+              description: Status value
+              $ref: '#/components/schemas/Status'
+        - type: string
+          properties:
+            expiryDate:
+              type: string
+              format: date
+              description: Day when the given status expires
+        - type: string
+          properties:
+            retestDate:
+              type: string
+              format: date
+              description: Date when a lot test must be retaken in order to keep the status valid
+  parameters:
+    OrganizationCode:
+      name: organization-code
+      in: path
+      description: Inventory organization code used in Polpharma. Value <b>ZPF</b> refers to master organization.
+      required: true
+      schema:
+        type: string
+    ItemCode:
+      name: item-code
+      in: path
+      description: Code of inventory item
+      required: true
+      schema:
+        type: string
+        minLength: 13
+        maxLength: 13
+    LotNumber:
+      name: lot-number
+      in: path
+      description: Inventory item lot number - not to be mistaken with supplier lot number
+      required: true
+      schema:
+        type: string
+  responses:
+    GetInventoryLot:
+      description: Response for correct request for getting inventory item lot basic information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InventoryLotBO'
+    GetItem:
+      description: Response for correct request for getting item basic information
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InventoryItemBO'
+  requestBodies:
+    InventoryLotStatus:
+      description: Request with new iventory lot status information. Value of the /status/meaning element is ignored by service.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/InventoryLotStatus'
