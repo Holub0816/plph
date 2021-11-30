@@ -8,3 +8,4 @@ properties:
     type: object
     description: An object to place elements that constitutes business identificator.<br> <b>If needed must be implemented via <BusinessObject>BusinessId reusable schema which is to extend Identification schema inside the object definition.</b><br>
       All of the properties inside businessId <b>MUST</b> build a proper unique Id
+      ## kom
